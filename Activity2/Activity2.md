@@ -29,7 +29,7 @@ $$accuracy(y, \hat{y}) = \frac{1}{n_{samples}} \sum^{n_{samples} - 1}_{i = 0} 1 
 
 | Logistic Regression | SVM Classifier  | Random Forest Classifier |
 |:-------------------:|:---------------:|:------------------------:|
-|        80.36        |       91.02     |           96.97          |
+|       0.8036        |      0.9102     |          0.9697          |
 
 </center>
 
@@ -70,20 +70,37 @@ AUC = roc_auc_score(Y_train, Y_train_pred)
 
 ## Improvements
 ### Modifying preprocessing
-#### Embarked to one-hot
-##### Comparison
+The comparison accuracy have been taken from 8-chunked cross validation.
+So the "Before" accuracy is lower than the value of problem 1.
 
-#### Title to one-hot
+Used classifier is SVM Classifier: `SVC(probability=True, gamma='auto')`
 
-##### Comparison
-
-#### Reviving family size
+#### #1 Reviving FamilySize
 Although there is some differences between family of four and family of ten but they're considered same as it is binary.
-So I have revived family size.
+So I have revived family size and applied normalization to FamilySize.
 
 ##### Comparison
+|        |      Accuracy     |
+|--------|-------------------|
+| Before | 0.7285 (± 0.0706) |
+| After  | 0.7274 (± 0.0686) |
 
-#### Reviving cabin
+As the mean accuracy have been decreased, it won't be used.
+
+#### #2 Embarked to one-hot
+Originally embarked was a numeric value: 0, 1, 2  
+But I have mapped this into one-hot vector: [1, 0, 0], [0, 1, 0], [0, 0, 1]  
+as numerical relation doesn't hold between Q, C, S.
+
+($2C \neq S$)
+
+##### Comparison
+|        |      Accuracy     |
+|--------|-------------------|
+| Before | 0.7285 (± 0.0706) |
+| After  | 0.7353 (± 0.0778) |
+
+#### #3 Parsing Cabin
 Although many cabin are empty, as cabin means position in ship, it might worth reviving.
 
 First, we split cabins by whitespace.
@@ -93,13 +110,46 @@ So, we'll remove the `T` cabin.
 Second, we'll make it to vector with length 7(A~G). If a customer has some cabins in a deck, it will be 1. Otherwise it will be 0.
 
 ##### Comparison
+|        |      Accuracy     |
+|--------|:-----------------:|
+| Before | 0.7285 (± 0.0706) |
+| After  | 0.7421 (± 0.0858) |
 
-#### Reviving tickets
-There are some types of tickets.
-1. `\d+` (ex: 364500)
-2. `[A-Z0-9.]+ \d+` (ex: PC 17756)
-3. `[A-Z0-9.]+\/[A-Z0-9.]+ \d+` (ex: STON/O2. 3101290)
+#### #4 Title to one-hot
+Originally title was a numeric value: 0, 1, ..., 5  
+But I have mapped this into one-hot vector as numerical relation doesn't hold between titles.
 
 ##### Comparison
+|        |      Accuracy     |
+|--------|:-----------------:|
+| Before | 0.7285 (± 0.0706) |
+| After  | 0.7297 (± 0.0854) |
+
+#### #5: Normalize Age, Fare
+As Age and Fare values are relatively larger than other values, we normalize it to $[0, 1]$
+
+##### Comparison
+|        |      Accuracy     |
+|--------|:-----------------:|
+| Before | 0.7285 (± 0.0706) |
+| After  | 0.8204 (± 0.0611) |
+
+<!--
+#### #6: Reviving tickets
+This regexp can match tickets except `LINE`: `([A-Z0-9.\/ ]+? )?\d+`.  
+For `LINE`, we drop the ticket info.  
+
+Then this can be splitted into two parts: prefix and number
+
+As prefix represents `Embarked`, we drop it. (STON/O2 ->S, A/5. -> S, PC -> C and more...)  
+
+The number can be used to fill cabin. There are some people with same ticket number.
+They're a group so if one of them have a cabin number, we can assume others also have same cabin number.  
+
+* Although there are some exception (`PC 17485` have `E36` and `A20`)
+but most of them have same cabin number or same deck.
+
+##### Comparison
+-->
 
 ### Modifying classifier
