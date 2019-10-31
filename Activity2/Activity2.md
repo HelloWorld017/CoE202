@@ -125,14 +125,14 @@ But I have mapped this into one-hot vector as numerical relation doesn't hold be
 | Before | 0.7285 (± 0.0706) |
 | After  | 0.7297 (± 0.0854) |
 
-#### #5: Normalize Age, Fare
-As Age and Fare values are relatively larger than other values, we normalize it to $[0, 1]$
+#### #5: Normalize Age, Fare, Pclass
+As Age, Fare and Pclass values are not in $[0, 1]$ and relatively larger than other values, we normalize it to $[0, 1]$
 
 ##### Comparison
 |        |      Accuracy     |
 |--------|:-----------------:|
 | Before | 0.7285 (± 0.0706) |
-| After  | 0.8204 (± 0.0611) |
+| After  | 0.8160 (± 0.0446) |
 
 <!--
 #### #6: Reviving tickets
@@ -153,3 +153,38 @@ but most of them have same cabin number or same deck.
 -->
 
 ### Modifying classifier
+The comparison accuracy have been taken from 8-chunked cross validation.
+
+#### SVC
+##### Kernels
+|          |        rbf        |   poly(degree=2)  |  poly(degree=3)   |  poly(degree=4)   |      sigmoid      |
+|--------  |:-----------------:|:-----------------:|:-----------------:|:-----------------:|:-----------------:|
+| Accuracy | 0.8182 (± 0.0484) | 0.8047 (± 0.0317) | 0.6162 (± 0.0032) | 0.6162 (± 0.0032) | 0.7911 (± 0.0472) |
+
+##### C value
+|          | 0.1               | 0.5               | 1.0               | 2.0               | 5.0               |
+|----------|-------------------|-------------------|-------------------|-------------------|-------------------|
+| Accuracy | 0.7867 (± 0.0432) | 0.7934 (± 0.0509) | 0.8182 (± 0.0484) | 0.8194 (± 0.0454) | 0.8171 (± 0.0499) |
+
+##### Gamma
+|          | 0.025             | 0.05              | 0.1               | 0.2               |
+|----------|-------------------|-------------------|-------------------|-------------------|
+| Accuracy | 0.8182 (± 0.0484) | 0.8194 (± 0.0454) | 0.8171 (± 0.0499) | 0.8171 (± 0.0714) |
+
+#### RandomForest
+##### N_estimators
+|          | 16                | 32                | 64                | 128               |
+|----------|-------------------|-------------------|-------------------|-------------------|
+| Accuracy | 0.8070 (± 0.0487) | 0.8003 (± 0.0506) | 0.8070 (± 0.0393) | 0.7980 (± 0.0496) |
+
+But it can be changed easily because of random. I used 64 as it shows genenerally good score when every time I run.
+
+##### max_depth
+|          | 2                 | 4                 | 8                 | 16                |
+|----------|-------------------|-------------------|-------------------|-------------------|
+| Accuracy | 0.7889 (± 0.0434) | 0.8149 (± 0.0500) | 0.8317 (± 0.0747) | 0.8149 (± 0.0511) |
+
+##### min_samples_split
+|          | Default           | 0.01              | 0.05              | 0.1               | 0.5               |
+|----------|-------------------|-------------------|-------------------|-------------------|-------------------|
+| Accuracy | 0.8261 (± 0.0630) | 0.8328 (± 0.0695) | 0.8260 (± 0.0793) | 0.8170 (± 0.0408) | 0.7889 (± 0.0512) |
