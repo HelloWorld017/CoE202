@@ -1,0 +1,27 @@
+body {
+	font-family: "Noto Sans CJK KR", sans-serif !important;
+	background: #fff !important;
+	color: #202020 !important;
+}
+
+h1, h2, h3, h4, h5, h6, strong, th {
+	color: #202020 !important;
+}
+
+
+.editor-colors {
+	font-family: 'Iosevka', sans-serif !important;
+	font-size: .8rem !important;
+}
+
+code {
+	color: #202020 !important;
+	background-color: #e1e2e3 !important;
+	padding: 0 5px !important;
+}
+
+blockquote {
+	color: #81a1c1 !important;
+	border-left: 3px solid #81a1c1 !important;
+	padding-left: 20px !important;
+}
