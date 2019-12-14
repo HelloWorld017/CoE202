@@ -1,4 +1,5 @@
 *.html
 *.pdf
 *.zip
-
+!Instruction.pdf
+.ipynb_checkpoints
