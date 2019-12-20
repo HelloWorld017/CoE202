@@ -62,7 +62,22 @@ Unfortunately, the accuracy have been decreased slightly.
 
 ## Problem 3
 For problem 3, I have rewrote the code.
+But the code of rewrote one have worse accuracy than problem 1, I just submitted that of problem 1.
+So I had really hard time whole day but I gained nothing.  
 
+This section is just to write what I did and how I failed.  
+The Loss & Accuracy graph is in logs directory, which can be opened with Tensorboard.
+
+### Idea
+* Combining data used in Problems 1, 2
+* As it can contain hash collision, find another way to map word to integer.
+* Instead of embedding sequence into a vector, use Bidirectional GRU ~~& Time Distributed Dense~~.
+  * When I used GRU, the total accuracy have decreased, so I abandoned it.
+* Ensemble Learning
+  * Not actually did because of lack of time
+* Tuning Hyperparameters
+* Using tensorboard
+<!--
 ### Idea
 For things that marked as `NOT`, it is not implemented.
 For things that marked as `DEC`, it is removed due to accuracy decrease.
@@ -75,3 +90,7 @@ For things that marked as `DEC`, it is removed due to accuracy decrease.
 * Ensemble Learning `NOT`
 * Increasing epoch `NOT`
 * Tuning Hyperparameters
+-->
+
+### After that
+As that did not work as I expected, I just reused the model & submissions I used in Problem 1.
