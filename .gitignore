@@ -3,3 +3,7 @@
 *.zip
 !Instruction.pdf
 .ipynb_checkpoints
+datasets
+models
+submissions.csv
+
