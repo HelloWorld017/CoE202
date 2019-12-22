@@ -88,6 +88,7 @@ The learning curve is shown as:
 ![Learning Curve](images/learningcurve.png)
 
 And final accuracy is shown as:
+
 |          |  Train  | Validation |  Test  |
 |:--------:|:-------:|:----------:|:------:|
 | Accuracy | 1.0000  |   0.9866   | 0.9852 |
