@@ -68,7 +68,7 @@ with tf.control_dependencies(update_ops):
 ```
 
 |     | batch_normalization |
-|:---:|:------------------------:|:--------------------------------:|
+|:---:|:------------------------:|
 | Learning Curve | ![BatchNorm Learning Curve](./images/bn-learningcurve2.png) |
 | RMSE Test | 1.0626 |
 | RMSE Train | 0.75401 |
